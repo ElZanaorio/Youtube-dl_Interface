@@ -5,6 +5,8 @@ from glob import glob
 from os import getlogin, system, remove
 from pathlib import Path
 
+# Link a la pagina con todos los formatos
+# https://gist.github.com/sidneys/7095afe4da4ae58694d128b1034e01e2
 
 usuario = getlogin()
 path = Path().absolute()
@@ -14,8 +16,7 @@ def descargar_mp3(url):
     mp3()
 
 def descargar_mp4(url):
-    system(f"start /min cmd /C cd {path} && youtube-dl -f bestvideo {url}")
-    system(f"start /min cmd /C cd {path} && youtube-dl -f bestaudio {url}")
+    system(f"start /min cmd /C cd {path} && youtube-dl -f 37 {url}")
     mp4()
 
 def mp3():
@@ -30,7 +31,6 @@ def mp3():
         m4a.append(str(path)+a[1:])
 
     for a in m4a:
-        print(a)
         audioClip = AudioFileClip(a)
         convertedFile = renombrar_mp3(a)
         audioClip.write_audiofile(convertedFile)
@@ -40,23 +40,24 @@ def mp3():
 
 
 def mp4():
-    mkv = []
+    mp4_list = []
     def renombrar_mp4(url):
         url = url[::-1]
         url = url[16:]
         url = url[::-1]
-        return (f'./{url}.mp4')
+        return (f'{url}.mp4')
 
-    for a in glob('./*.mkv'):
-        mkv.append(a)
+    for a in glob('.\*.mp4'):
+        mp4.append(a)
 
-        # Aqui iria lo de convertir a MP4
-
+    for a in mp4_list:
         move(renombrar_mp4(a), f'C:/Users/{usuario}/Desktop')
         remove(a)
 
+
+
 ventana = tkinter.Tk()
-ventana.geometry("500x600")
+ventana.geometry("300x200")
 
 texto_youtube_dl = tkinter.Label(ventana, text="YOUTUBE-DL", fg="black")
 texto_youtube_dl.pack(side = tkinter.TOP)
