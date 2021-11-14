@@ -43,3 +43,4 @@ def mp4():
         move(renombrar_mp4(a), f'C:/Users/{usuario}/Desktop')
         remove(a)
 
+mp3()
